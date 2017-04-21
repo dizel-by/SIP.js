@@ -670,6 +670,9 @@ Session.prototype = {
               }
 
               new DTMF(this, tone, {duration: duration}).init_incoming(request);
+            } else if (contentType.match(/^application\/media_control.xml/i)) {
+              this.emit('mediacontrol', request);
+              request.reply(200);
             } else {
               request.reply(415, null, ["Accept: application/dtmf-relay"]);
             }
